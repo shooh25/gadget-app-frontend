@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import { AuthProvider } from "./lib/auth";
 import Login from "./pages/Login";
-import Profile from "./pages/Top";
+import Top from "./pages/Top";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const [user, isLoading] = AuthProvider();
@@ -14,8 +15,9 @@ const App = () => {
       <>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Profile />} />
+            <Route path="/" element={<Top />} />
             <Route path="/login" element={user ? <Navigate replace to="/" /> : <Login />} />
+            {/* <Route path={`/${user}`} element={<Profile />} /> */}
           </Routes>
         </BrowserRouter>
       </>

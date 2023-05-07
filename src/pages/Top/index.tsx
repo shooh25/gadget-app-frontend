@@ -1,21 +1,32 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./style.scss";
-import { AuthProvider, logout } from "../../lib/auth";
+
+import { AuthProvider, logout, test } from "../../lib/auth";
+import { getUsers } from "../../lib/api/users";
+import Button from "../../components/Button";
 
 const Top = () => {
   const [user, isLoading] = AuthProvider();
+
+  // テスト
+  useEffect(() => {
+    const res = getUsers();
+    console.log(res)
+  }, []);
 
   return (
     <>
       <h1>トップページ</h1>
       {user ? (
         <div>
-          <button onClick={logout}>ログアウト</button>
+          <Button value={"ログアウト"} onClick={logout} />
         </div>
       ) : (
         <div>
-          <Link to={'/login'}>ログイン</Link>
+          <Link to={"/login"}>
+            <Button value={"ログイン"} onClick={() => {}} />
+          </Link>
         </div>
       )}
     </>
