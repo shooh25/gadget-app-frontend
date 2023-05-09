@@ -1,5 +1,7 @@
 // DBに登録するユーザー
 export type UserType = {
   uid: string
-  displayName: string | null
+  display_name: string | null
+  user_name: string | null | undefined
+  photo_url: string | null
 }

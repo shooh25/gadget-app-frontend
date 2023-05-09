@@ -2,23 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./style.scss";
 
-import { AuthProvider, logout, test } from "../../lib/auth";
-import { getUsers } from "../../lib/api/users";
+import { AuthProvider, logout } from "../../lib/auth";
+import { getUser, getUsers } from "../../lib/api/users";
 import Button from "../../components/Button";
 
-const Top = () => {
-  const [user, isLoading] = AuthProvider();
-
-  // テスト
-  useEffect(() => {
-    const res = getUsers();
-    console.log(res)
-  }, []);
+const Top: React.FunctionComponent = () => {
+  const [currentUser, isLoading] = AuthProvider(); // ログイン状態
 
   return (
     <>
       <h1>トップページ</h1>
-      {user ? (
+      {currentUser ? (
         <div>
           <Button value={"ログアウト"} onClick={logout} />
         </div>

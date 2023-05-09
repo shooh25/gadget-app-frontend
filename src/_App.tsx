@@ -6,8 +6,9 @@ import Login from "./pages/Login";
 import Top from "./pages/Top";
 import Profile from "./pages/Profile";
 
-const App = () => {
-  const [user, isLoading] = AuthProvider();
+const App: React.FunctionComponent = () => {
+  const [currentUser, isLoading] = AuthProvider();
+  
   if (isLoading) {
     return <p>ロード中</p>;
   } else {
@@ -16,8 +17,8 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Top />} />
-            <Route path="/login" element={user ? <Navigate replace to="/" /> : <Login />} />
-            {/* <Route path={`/${user}`} element={<Profile />} /> */}
+            <Route path="/login" element={currentUser ? <Navigate replace to="/" /> : <Login />} />
+            <Route path={`:user_name`} element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </>

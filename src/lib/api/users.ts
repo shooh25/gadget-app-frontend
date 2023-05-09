@@ -10,3 +10,8 @@ export const getUsers = () => {
 export const addUser = (user: UserType) => {
   return client.post('/users', user)
 }
+
+// 個別ユーザー取得
+export const getUser = (userName: string | undefined) => {
+  return client.get(`users/${userName}`)
+}
