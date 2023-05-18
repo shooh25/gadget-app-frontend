@@ -7,7 +7,7 @@ import Top from "./pages/Top";
 import Profile from "./pages/Profile";
 
 const App: React.FunctionComponent = () => {
-  const [currentUser, isLoading] = AuthProvider();
+  const {currentUser, isLoading} = AuthProvider();
   
   if (isLoading) {
     return <p>ロード中</p>;

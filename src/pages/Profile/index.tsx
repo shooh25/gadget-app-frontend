@@ -1,28 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import styles from "./style.scss";
-import { useParams } from "react-router-dom";
 
 import { AuthProvider, logout } from "../../lib/auth";
-import { getUser } from "../../lib/api/users";
+import { getUserByName } from "../../lib/api/users";
 import { UserType } from "../../types";
+import Button from "../../components/Button";
 
 const Profile: React.FunctionComponent = () => {
-  const [currentUser, isLoading] = AuthProvider(); // ログイン状態
+  const pathName = useLocation().pathname; // URL末尾
+  const { currentUser } = AuthProvider(); // ログイン状態
   const [userData, setUserData] = useState<UserType | null>(null); // プロフィールに表示されるユーザー
-  const params = useParams();
+  const [isLoading, setIsLoading] = useState<Boolean>(true); // ユーザー情報を読み込む間ロード
+  const [isMyPage, setIsMyPage] = useState<boolean>(false); // マイページか否か
 
   useEffect(() => {
     const handleGetUser = async () => {
-      const res = await getUser(params.user_name);
-      setUserData(res.data); // paramsで取得したユーザーのデータを登録
+      // URL末尾の文字列でユーザーを検索
+      const res = await getUserByName(pathName.slice(1)); 
+      setUserData(res.data);
+
+      // ロード画面終了
+      setIsLoading(false);
     };
     handleGetUser();
   }, []);
 
+  useEffect(() => {
+    // マイページの判定
+    if (currentUser && userData) {
+      if (currentUser.uid === userData.uid) {
+        setIsMyPage(true);
+      }
+    }
+  }, [currentUser, userData]);
+
   return (
     <>
       <h1>プロフィールページ</h1>
-      <p></p>
+
+      {isLoading ? (
+        <div></div>
+      ) : (
+        <div>
+          {userData ? (
+            <div>
+              <h2>{userData.user_name}</h2>
+              {isMyPage ? (
+                <div>
+                  <Button value={"プロフィールを編集"} onClick={() => {}} />
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <div>
+              <h2>このアカウントは存在しません</h2>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };

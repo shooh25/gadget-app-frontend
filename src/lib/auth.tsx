@@ -3,13 +3,12 @@ import {
   getAuth,
   TwitterAuthProvider,
   signInWithPopup,
-  onAuthStateChanged,
   getAdditionalUserInfo,
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { app } from "./firebase";
-import { addUser, getUser } from "./api/users";
+import { addUser } from "./api/users";
 
 export type AuthUserType = User | null | undefined;
 
@@ -57,5 +56,5 @@ export const AuthProvider = () => {
     setUser(user);
     setIsLoading(loading);
   });
-  return [currentUser, isLoading];
+  return {currentUser, isLoading};
 };
