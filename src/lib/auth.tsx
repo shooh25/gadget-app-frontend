@@ -34,6 +34,8 @@ export const login = () => {
         display_name: displayName,
         user_name: userName,
         photo_url: photoURL,
+        
+        computer: {}
       });
     }
   });

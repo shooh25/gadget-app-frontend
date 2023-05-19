@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import styles from "./style.scss";
+import { useLocation, Link } from "react-router-dom";
 
-import { AuthProvider, logout } from "../../lib/auth";
+import styles from "./style.scss";
+import { AuthProvider } from "../../lib/auth";
 import { getUserByName } from "../../lib/api/users";
 import { UserType } from "../../types";
 import Button from "../../components/Button";
+import Device from "../../components/Device";
 
 const Profile: React.FunctionComponent = () => {
   const pathName = useLocation().pathname; // URL末尾
@@ -17,9 +18,9 @@ const Profile: React.FunctionComponent = () => {
   useEffect(() => {
     const handleGetUser = async () => {
       // URL末尾の文字列でユーザーを検索
-      const res = await getUserByName(pathName.slice(1)); 
+      const res = await getUserByName(pathName.slice(1));
       setUserData(res.data);
-
+      
       // ロード画面終了
       setIsLoading(false);
     };
@@ -38,19 +39,26 @@ const Profile: React.FunctionComponent = () => {
   return (
     <>
       <h1>プロフィールページ</h1>
-
       {isLoading ? (
         <div></div>
       ) : (
         <div>
           {userData ? (
             <div>
-              <h2>{userData.user_name}</h2>
-              {isMyPage ? (
-                <div>
-                  <Button value={"プロフィールを編集"} onClick={() => {}} />
-                </div>
-              ) : null}
+              <section>
+                <h2>{userData.user_name}</h2>
+                {isMyPage ? (
+                  <div>
+                    <Link to={'/setting'}>
+                      <Button value={"編集"} onClick={() => {}} />
+                    </Link>
+                  </div>
+                ) : null}
+              </section>
+
+              <section>
+                <Device data={userData.computer}/>
+              </section>
             </div>
           ) : (
             <div>
