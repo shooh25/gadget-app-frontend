@@ -5,26 +5,10 @@ export type UserType = {
   user_name: string | null | undefined;
   photo_url: string | null;
 
-  computer: object;
+  computer: any;
 };
 
-// デバイス
-export type DeviceType = {
-  cpu_name: string;
-  created_at: string;
-  gpu_name: string;
-  id: string;
-  updated_at: string;
-  user_id: string;
-};
-
-// export type DeviceType = {
-//   computer: {
-//     cpu_name: string;
-//     created_at: string;
-//     gpu_name: string;
-//     id: string;
-//     updated_at: string;
-//     user_id: string;
-//   }
-// };
+// ガジェット
+export type gadgetType = {
+  [key: string]: any
+}

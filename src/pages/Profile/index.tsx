@@ -9,8 +9,8 @@ import Button from "../../components/Button";
 import Device from "../../components/Device";
 
 const Profile: React.FunctionComponent = () => {
-  const pathName = useLocation().pathname; // URL末尾
-  const { currentUser } = AuthProvider(); // ログイン状態
+  const pathName = useLocation().pathname; // URL末尾の文字列
+  const { currentUser } = AuthProvider(); // ログイン状態を監視
   const [userData, setUserData] = useState<UserType | null>(null); // プロフィールに表示されるユーザー
   const [isLoading, setIsLoading] = useState<Boolean>(true); // ユーザー情報を読み込む間ロード
   const [isMyPage, setIsMyPage] = useState<boolean>(false); // マイページか否か
@@ -19,13 +19,19 @@ const Profile: React.FunctionComponent = () => {
     const handleGetUser = async () => {
       // URL末尾の文字列でユーザーを検索
       const res = await getUserByName(pathName.slice(1));
-      setUserData(res.data);
-      
+
+      // 不要なフィールドを削除
+      if (res.data) {
+        setUserData(res.data);
+      }
+
       // ロード画面終了
       setIsLoading(false);
     };
     handleGetUser();
   }, []);
+
+  // console.log(userData);
 
   useEffect(() => {
     // マイページの判定
@@ -36,12 +42,12 @@ const Profile: React.FunctionComponent = () => {
     }
   }, [currentUser, userData]);
 
-  return (
-    <>
-      <h1>プロフィールページ</h1>
-      {isLoading ? (
-        <div></div>
-      ) : (
+  if (isLoading) {
+    return <></>;
+  } else {
+    return (
+      <>
+        <h1>プロフィールページ</h1>
         <div>
           {userData ? (
             <div>
@@ -49,15 +55,15 @@ const Profile: React.FunctionComponent = () => {
                 <h2>{userData.user_name}</h2>
                 {isMyPage ? (
                   <div>
-                    <Link to={'/setting'}>
-                      <Button value={"編集"} onClick={() => {}} />
+                    <Link to={"/setting"}>
+                      <Button value={"プロフィールを編集"} onClick={() => {}} />
                     </Link>
                   </div>
                 ) : null}
               </section>
 
               <section>
-                <Device data={userData.computer}/>
+                <Device data={userData.computer} />
               </section>
             </div>
           ) : (
@@ -66,9 +72,9 @@ const Profile: React.FunctionComponent = () => {
             </div>
           )}
         </div>
-      )}
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default Profile;

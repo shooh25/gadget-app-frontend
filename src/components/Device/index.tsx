@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.scss";
+import { createDisplayData } from "../../utils/helpers";
+import { computerLabels } from "../../utils/datas";
+import { gadgetType } from "../../types";
 
-const Device: React.FC<{ data: object }> = (props) => {
-  const [displayData, setDisplayData] = useState<string[][]>([]);
-
-  const labels = {
-    cpu_name: "CPU",
-    gpu_name: "GPU",
-  };
+const Device: React.FC<{ data: gadgetType }> = (props) => {
+  const [displayData, setDisplayData] = useState<any>(null);
 
   useEffect(() => {
-    for (const [key, value] of Object.entries(props.data)) {
-      if (key in labels && value) {
-        const label = labels[key as keyof typeof labels];
-        setDisplayData([...displayData, [label, value]]);
-      }
-    }
+    // labelsに基づいて表示するデータを作成
+    setDisplayData(createDisplayData(computerLabels, props.data));
   }, []);
 
-  if (displayData.length) {
+  if (displayData) {
     return (
       <>
         <ul>
-          {displayData.map(([label, value], i) => (
-            <li key={i}>
-              <p>{label}</p>
-              <p>{value}</p>
-            </li>
-          ))}
+          {Object.keys(displayData).map((key) =>
+            displayData[key].text ? (
+              <li key={key}>
+                <p>{displayData[key].label}</p>
+                <p>{displayData[key].text}</p>
+              </li>
+            ) : null
+          )}
         </ul>
       </>
     );

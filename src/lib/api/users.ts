@@ -20,3 +20,8 @@ export const getUserByName = (userName: string) => {
 export const getUserByUid = (uid: string) => {
   return client.get(`users?uid=${uid}`)
 }
+
+// 更新
+export const updateUser = (user: UserType) => {
+  return client.patch(`users/${user.uid}`, user)
+}
