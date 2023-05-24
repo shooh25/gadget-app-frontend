@@ -1,0 +1,9 @@
+@import '../../variable';
+
+.root {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 0 20px;
+  border-left: 1px solid $gray5;
+  border-right: 1px solid $gray5;
+}

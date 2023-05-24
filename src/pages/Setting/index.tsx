@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styles from "./style.scss";
 import { getUserByUid } from "../../lib/api/users";
 import { AuthProvider } from "../../lib/auth";
-import { UserType } from "../../types";
 import { updateUser } from "../../lib/api/users";
 import { createDisplayData } from "../../utils/helpers";
 import { computerLabels } from "../../utils/datas";
@@ -34,8 +33,8 @@ const Setting: React.FunctionComponent = () => {
     }
   }, [currentUser]);
 
-  // 入力した値にデータを更新
-  const handleChange = (
+  // デバイスのパーツ名を更新
+  const handleChangeComp = (
     e: any,
     key: string,
     userKey: string,
@@ -53,14 +52,46 @@ const Setting: React.FunctionComponent = () => {
     setUserData(updatedUser);
   };
 
+  // ガジェットのアイテム名を更新
+  const handleChangeItem = (e: any, i: number, category: string) => {
+    const updatedUser = { ...userData };
+    updatedUser.gadget.mouse_items[i] = e.target.value;
+    setUserData(updatedUser);
+  };
+
+  // アイテム追加
+  const addItem = (category: string) => {
+    const updatedUser = { ...userData };
+    updatedUser.gadget.mouse_items.push("");
+    setUserData(updatedUser);
+  };
+
+  // アイテム削除
+  const removeItem = (i: number, category: string) => {
+    const updatedUser = { ...userData };
+    updatedUser.gadget.mouse_items.splice(i, 1);
+    setUserData(updatedUser);
+  };
+
+  // 空文字を除く
+  const removeEmptyElements = (items: string[]) => {
+    return items.filter((item) => item != '')
+  }
+
   // 更新して保存
   const handleUpdateUser = () => {
+    const updatedUser = { ...userData };
+    updatedUser.gadget.mouse_items =  removeEmptyElements(updatedUser.gadget.mouse_items)
+    setUserData(updatedUser)
+
     if (userData) {
-      updateUser(userData)
+      console.log(userData)
+      updateUser(userData);
     }
   };
 
   if (userData) {
+    const gadget = userData.gadget;
     return (
       <>
         <h1>設定</h1>
@@ -75,12 +106,38 @@ const Setting: React.FunctionComponent = () => {
                   type="text"
                   value={computerData[key].text}
                   onChange={(e) =>
-                    handleChange(e, key, "computer", computerData, setComputerData)
+                    handleChangeComp(
+                      e,
+                      key,
+                      "computer",
+                      computerData,
+                      setComputerData
+                    )
                   }
                 />
               </div>
             ))}
           </ul>
+          <div>
+            <h3>周辺機器</h3>
+            <ul>
+              {gadget.mouse_items.map((item: string, i: number) => (
+                <li key={i}>
+                  <input
+                    type="text"
+                    value={item}
+                    onChange={(e) => handleChangeItem(e, i, "mouse_items")}
+                  />
+                  <Button
+                    value={"削除"}
+                    onClick={() => removeItem(i, "mouse_items")}
+                  />
+                </li>
+              ))}
+            </ul>
+            <Button value={"新規追加する"} onClick={() => addItem("mouse_items")} />
+          </div>
+
           <Button value={"保存"} onClick={() => handleUpdateUser()} />
           <Link to={`/${userData.user_name}`}>
             <Button value={"戻る"} onClick={() => {}} />

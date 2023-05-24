@@ -1,0 +1,72 @@
+// Color
+:root {
+  @media (prefers-color-scheme: light) {
+    --text1: #000000;
+    --text2: #636366;
+
+    --gray1: #8e8e93;
+    --gray2: #aeaeb2;
+    --gray3: #c7c7cc;
+    --gray4: #d1d1d6;
+    --gray5: #ffffff;
+    --gray6: #f2f2f2;
+    --gray7: #e5e5ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    --text1: #ffffff;
+    --text2: #aeaeb2;
+
+    --gray1: #8e8e93;
+    --gray2: #636366;
+    --gray3: #48484a;
+    --gray4: #3a3a3c;
+    --gray5: #2c2c2e;
+    --gray6: #1c1c1e;
+    --gray7: #000000;
+  }
+}
+
+// text-color
+$text1: var(--text1);
+$text2: var(--text2);
+
+// background-color
+$gray1: var(--gray1);
+$gray2: var(--gray2);
+$gray3: var(--gray3);
+$gray4: var(--gray4);
+$gray5: var(--gray5);
+$gray6: var(--gray6);
+$gray7: var(--gray7);
+
+
+// Font
+@mixin text1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+@mixin text2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+@mixin text3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+@mixin text4 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 160%;
+}
+
+@mixin text5 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 160%;
+}

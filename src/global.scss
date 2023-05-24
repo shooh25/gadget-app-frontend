@@ -1,0 +1,43 @@
+@import "./variable";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;600;500&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  background: $gray6;
+}
+
+body {
+  font-family: Inter, Helvetica Neue, Arial, Hiragino Kaku Gothic ProN,
+    Hiragino Sans, Meiryo, sans-serif;
+  text-decoration: none;
+  font-style: none;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a {
+  color: $text1;
+  font-style: none;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}

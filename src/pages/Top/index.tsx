@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import styles from "./style.scss";
 
 import { AuthProvider, logout } from "../../lib/auth";
+import Container from "../../components/Container";
 import Button from "../../components/Button";
 
 const Top: React.FunctionComponent = () => {
@@ -29,23 +30,25 @@ const Top: React.FunctionComponent = () => {
 
   return (
     <>
-      <h1>トップページ</h1>
+      <Container>
+        <h1>トップページ</h1>
 
-      {currentUser ? (
-        <div>
-          <Button value={"ログアウト"} onClick={logout} />
+        {currentUser ? (
+          <div>
+            <Button value={"ログアウト"} onClick={logout} />
 
-          <Link to={`/${userName}`}>
-            <Button value={"マイページ"} onClick={() => {}} />
-          </Link>
-        </div>
-      ) : (
-        <div>
-          <Link to={"/login"}>
-            <Button value={"ログイン"} onClick={() => {}} />
-          </Link>
-        </div>
-      )}
+            <Link to={`/${userName}`}>
+              <Button value={"マイページ"} onClick={() => {}} />
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <Link to={"/login"}>
+              <Button value={"ログイン"} onClick={() => {}} />
+            </Link>
+          </div>
+        )}
+      </Container>
     </>
   );
 };

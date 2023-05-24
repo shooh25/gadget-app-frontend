@@ -21,6 +21,7 @@ export const login = () => {
     const uid = cred.user.uid;
     const userName = getAdditionalUserInfo(cred)?.username?.toLowerCase();
     const displayName = cred.user.displayName;
+    const desc = getAdditionalUserInfo(cred)?.profile?.description?.toString();
 
     // プロフィール画像のサイズ変更
     const photoURL = cred.user.photoURL
@@ -34,8 +35,10 @@ export const login = () => {
         display_name: displayName,
         user_name: userName,
         photo_url: photoURL,
-        
-        computer: {}
+        desc: desc,
+
+        computer: {},
+        gadget: {}
       });
     }
   });
@@ -58,5 +61,5 @@ export const AuthProvider = () => {
     setUser(user);
     setIsLoading(loading);
   });
-  return {currentUser, isLoading};
+  return { currentUser, isLoading };
 };

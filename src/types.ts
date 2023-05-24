@@ -4,11 +4,8 @@ export type UserType = {
   display_name: string | null;
   user_name: string | null | undefined;
   photo_url: string | null;
+  desc: string | undefined;
 
   computer: any;
+  gadget: any;
 };
-
-// ガジェット
-export type gadgetType = {
-  [key: string]: any
-}

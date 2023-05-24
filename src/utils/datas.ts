@@ -9,3 +9,12 @@ export const computerLabels = {
   cooler_name: "クーラー",
   power_name: "電源",
 }
+
+export const gadgetLabels = {
+  mouse_items: "マウス / マウスパッド",
+  keyboard_items: "キーボード",
+  monitor_items: "モニター",
+  audio_items: "オーディオ / マイク",
+  pad_items: "コントローラー",
+  phone_items: "スマホ",
+}
