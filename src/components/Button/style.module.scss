@@ -1,0 +1,26 @@
+@import "../../variable";
+
+.primary_button {
+  display: block;
+  border: none;  
+  padding: 6px 14px;
+  border-radius: 100vh;
+  cursor: pointer;
+  @include text6;
+
+  color: $gray6;
+  background: $text1;
+}
+
+
+.secondary_button {
+  display: block;
+  border: none;  
+  padding: 6px 14px;
+  border-radius: 100vh;
+  cursor: pointer;
+  @include text6;
+  
+  color: $text1;
+  background: $gray5;
+}

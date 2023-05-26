@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 const Login: React.FunctionComponent = () => {
   return (
     <>
-      <Button value="Twitterでログイン" onClick={login} />
+      <Button value="Twitterでログイン" onClick={login} design="primary"/>
     </>
   );
 };

@@ -1,0 +1,39 @@
+@import "../../variable";
+
+
+.gadget_group {
+  padding-bottom: 18px;
+
+  .heading {
+    padding-bottom: 10px;
+
+    h3 {
+      @include text5;
+    }
+  }
+  .item {
+    position: relative;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      .btn_wrapper {
+        display: block;
+      }
+    }
+  }
+
+  .btn_wrapper {
+    top: 4px;
+    right: 0;
+    position: absolute;
+    display: none;
+  }
+}
+
+.btn_area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

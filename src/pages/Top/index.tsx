@@ -35,16 +35,16 @@ const Top: React.FunctionComponent = () => {
 
         {currentUser ? (
           <div>
-            <Button value={"ログアウト"} onClick={logout} />
+            <Button value={"ログアウト"} onClick={logout} design="primary"/>
 
             <Link to={`/${userName}`}>
-              <Button value={"マイページ"} onClick={() => {}} />
+              <Button value={"マイページ"} onClick={() => {}} design="primary"/>
             </Link>
           </div>
         ) : (
           <div>
             <Link to={"/login"}>
-              <Button value={"ログイン"} onClick={() => {}} />
+              <Button value={"ログイン"} onClick={() => {}} design="primary"/>
             </Link>
           </div>
         )}

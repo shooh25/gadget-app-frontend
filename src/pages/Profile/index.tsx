@@ -62,7 +62,7 @@ const Profile: React.FunctionComponent = () => {
                     {isMyPage ? (
                       <div className={styles.edit_button}>
                         <Link to={"/setting"}>
-                          <Button value={"編集"} onClick={() => {}} />
+                          <Button value={"編集"} onClick={() => {}} design="primary"/>
                         </Link>
                       </div>
                     ) : null}
@@ -84,7 +84,10 @@ const Profile: React.FunctionComponent = () => {
                   <Card data={userData.gadget.monitor_items} heading={gadgetLabels['monitor_items']} />
                   <Card data={userData.gadget.audio_items} heading={gadgetLabels['audio_items']} />
                   <Card data={userData.gadget.pad_items} heading={gadgetLabels['pad_items']} />
+                </section>
 
+                <section className={styles.section}>
+                <h2 className={styles.section_heading}>その他</h2>
                 </section>
               </>
             ) : (

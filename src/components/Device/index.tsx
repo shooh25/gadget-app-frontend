@@ -3,19 +3,20 @@ import styles from "./style.module.scss";
 import { createDisplayData } from "../../utils/helpers";
 import { computerLabels } from "../../utils/datas";
 
-type propsType = {
+type Props = {
   [key: string]: any
 }
 
-const Device: React.FC<{ data: propsType }> = (props) => {
+const Device: React.FC<{ data: Props }> = (props) => {
   const [displayData, setDisplayData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(true); // ユーザー情報を読み込む間ロード
 
   useEffect(() => {
     // labelsに基づいて表示するデータを作成
-    setDisplayData(createDisplayData(computerLabels, props.data));
+    setDisplayData(createDisplayData(computerLabels, props.data, true));
     setIsLoading(false);
   }, []);
+
   console.log(displayData)
 
   if (isLoading) {
@@ -31,7 +32,7 @@ const Device: React.FC<{ data: propsType }> = (props) => {
         {displayData ? (
           <ul>
             {Object.keys(displayData).map((key) =>
-              displayData[key].text ? (
+              displayData[key] && displayData[key].text ? (
                 <li className={styles.item} key={key} >
                   <p className={styles.label}>{displayData[key].label}</p>
                   <p className={styles.text}>{displayData[key].text}</p>

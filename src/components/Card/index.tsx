@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
-import { createDisplayData } from "../../utils/helpers";
-import { computerLabels } from "../../utils/datas";
 
 type propsType = {
   data: string[];
@@ -31,8 +29,8 @@ const Card: React.FC<propsType> = (props) => {
           <div>
             <h3 className={styles.heading}>{props.heading}</h3>
             <ul>
-              {displayData.map((item) => (
-                <li className={styles.item}>
+              {displayData.map((item, i) => (
+                <li className={styles.item} key={i}>
                   <p>{item}</p>
                 </li>
               ))}

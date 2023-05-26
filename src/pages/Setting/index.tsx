@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styles from "./style.scss";
+import styles from "./style.module.scss";
 import { getUserByUid } from "../../lib/api/users";
 import { AuthProvider } from "../../lib/auth";
 import { updateUser } from "../../lib/api/users";
 import { createDisplayData } from "../../utils/helpers";
-import { computerLabels } from "../../utils/datas";
+import { computerLabels, gadgetLabels } from "../../utils/datas";
+import Container from "../../components/Container";
 import Button from "../../components/Button";
+import SettingList from "../../components/SettingList";
 
-const Setting: React.FunctionComponent = () => {
+const Setting: React.FC = () => {
   const { currentUser } = AuthProvider(); // ログイン状態
   const [userData, setUserData] = useState<any>(null); // ログイン中のユーザーのデータ
 
@@ -25,7 +27,7 @@ const Setting: React.FunctionComponent = () => {
           // labelsに基づいて表示するデータを作成
           setUserData(res.data);
           setComputerData(
-            createDisplayData(computerLabels, { ...res.data.computer })
+            createDisplayData(computerLabels, { ...res.data.computer }, false)
           );
         }
       };
@@ -52,98 +54,105 @@ const Setting: React.FunctionComponent = () => {
     setUserData(updatedUser);
   };
 
-  // ガジェットのアイテム名を更新
-  const handleChangeItem = (e: any, i: number, category: string) => {
-    const updatedUser = { ...userData };
-    updatedUser.gadget.mouse_items[i] = e.target.value;
-    setUserData(updatedUser);
-  };
-
-  // アイテム追加
-  const addItem = (category: string) => {
-    const updatedUser = { ...userData };
-    updatedUser.gadget.mouse_items.push("");
-    setUserData(updatedUser);
-  };
-
-  // アイテム削除
-  const removeItem = (i: number, category: string) => {
-    const updatedUser = { ...userData };
-    updatedUser.gadget.mouse_items.splice(i, 1);
-    setUserData(updatedUser);
-  };
-
   // 空文字を除く
   const removeEmptyElements = (items: string[]) => {
-    return items.filter((item) => item != '')
-  }
+    return items.filter((item) => item !== "");
+  };
 
   // 更新して保存
   const handleUpdateUser = () => {
     const updatedUser = { ...userData };
-    updatedUser.gadget.mouse_items =  removeEmptyElements(updatedUser.gadget.mouse_items)
-    setUserData(updatedUser)
 
+    for (let key in gadgetLabels) {
+      updatedUser.gadget[key] = removeEmptyElements(
+        updatedUser.gadget[key]
+      );
+
+    }
     if (userData) {
-      console.log(userData)
       updateUser(userData);
     }
   };
 
   if (userData) {
-    const gadget = userData.gadget;
     return (
       <>
-        <h1>設定</h1>
-        <h2>{userData.user_name}</h2>
-        <div>
-          <h3>メインデバイス</h3>
-          <ul>
-            {Object.keys(computerData).map((key) => (
-              <div key={key}>
-                <p>{computerData[key].label}</p>
-                <input
-                  type="text"
-                  value={computerData[key].text}
-                  onChange={(e) =>
-                    handleChangeComp(
-                      e,
-                      key,
-                      "computer",
-                      computerData,
-                      setComputerData
-                    )
-                  }
+        <Container>
+          <div className={styles.root}>
+            <div className={styles.heading}>
+              <h1>設定</h1>
+            </div>
+            <div className={styles.body}>
+              <section className={styles.contents}>
+                <div className={styles.heading}>
+                  <h2>メインデバイス</h2>
+                </div>
+                <ul className={styles.computer_list}>
+                  {Object.keys(computerData).map((key) => (
+                    <li className={styles.item} key={key}>
+                      <label htmlFor={key} className={styles.label}>
+                        {computerData[key].label}
+                      </label>
+                      <input
+                        value={computerData[key].text}
+                        placeholder={`${computerData[key].label}名を入力する`}
+                        type="text"
+                        id={key}
+                        onChange={(e) =>
+                          handleChangeComp(
+                            e,
+                            key,
+                            "computer",
+                            computerData,
+                            setComputerData
+                          )
+                        }
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className={styles.contents}>
+                <div className={styles.heading}>
+                  <h2>周辺機器</h2>
+                </div>
+
+                {/* マウス */}
+                <SettingList
+                  label={gadgetLabels["mouse_items"]}
+                  category={"mouse_items"}
+                  userData={userData}
+                  setUserData={setUserData}
                 />
-              </div>
-            ))}
-          </ul>
-          <div>
-            <h3>周辺機器</h3>
-            <ul>
-              {gadget.mouse_items.map((item: string, i: number) => (
-                <li key={i}>
-                  <input
-                    type="text"
-                    value={item}
-                    onChange={(e) => handleChangeItem(e, i, "mouse_items")}
-                  />
+
+                {/* キーボード */}
+                <SettingList
+                  label={gadgetLabels["keyboard_items"]}
+                  category={"keyboard_items"}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
+              </section>
+
+              {/* 下部のバー */}
+              <section className={styles.bar}>
+                <Button
+                  value={"保存"}
+                  onClick={() => handleUpdateUser()}
+                  design="primary"
+                />
+                <Link to={`/${userData.user_name}`}>
                   <Button
-                    value={"削除"}
-                    onClick={() => removeItem(i, "mouse_items")}
+                    value={"戻る"}
+                    onClick={() => {}}
+                    design="secondary"
                   />
-                </li>
-              ))}
-            </ul>
-            <Button value={"新規追加する"} onClick={() => addItem("mouse_items")} />
+                </Link>
+              </section>
+            </div>
           </div>
-
-          <Button value={"保存"} onClick={() => handleUpdateUser()} />
-          <Link to={`/${userData.user_name}`}>
-            <Button value={"戻る"} onClick={() => {}} />
-          </Link>
-
-        </div>
+        </Container>
       </>
     );
   } else {

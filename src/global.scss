@@ -41,3 +41,17 @@ a {
 li {
   list-style: none;
 }
+
+input {
+  padding: 8px;
+  border-radius: 8px;
+  color: $text1;
+
+  background: $gray5;
+  border: none;
+  @include text4;
+
+  &:focus {
+    outline: none;
+  }
+}
