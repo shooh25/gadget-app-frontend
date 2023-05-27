@@ -1,14 +1,7 @@
-import {
-  User,
-  getAuth,
-  TwitterAuthProvider,
-  signInWithPopup,
-  getAdditionalUserInfo,
-} from "firebase/auth";
 import { getUserByUid } from "../../lib/api/users";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./style.scss";
+import styles from "./style.module.scss";
 
 import { AuthProvider, logout } from "../../lib/auth";
 import Container from "../../components/Container";
@@ -31,23 +24,29 @@ const Top: React.FunctionComponent = () => {
   return (
     <>
       <Container>
-        <h1>トップページ</h1>
-
-        {currentUser ? (
-          <div>
-            <Button value={"ログアウト"} onClick={logout} design="primary"/>
-
-            <Link to={`/${userName}`}>
-              <Button value={"マイページ"} onClick={() => {}} design="primary"/>
-            </Link>
+        <div className={styles.root}>
+          <div className={styles.contents}>
+            <div className={styles.heading}>
+              <h1>MyGadgets</h1>
+              <p>自慢のガジェットを簡単に紹介できるサービス</p>
+            </div>
+            {currentUser ? (
+              <div className={styles.btn_area}>
+                <Button value={"ログアウト"} onClick={logout} design="secondary"/>
+                <Link to={`/${userName}`}>
+                  <Button value={"マイページへ"} onClick={() => {}} design="primary"/>
+                </Link>
+              </div>
+            ) : (
+              <div className={styles.btn_area}>
+                <Link to={"/login"}>
+                  <Button value={"ログイン"} onClick={() => {}} design="primary"/>
+                </Link>
+              </div>
+            )}
           </div>
-        ) : (
-          <div>
-            <Link to={"/login"}>
-              <Button value={"ログイン"} onClick={() => {}} design="primary"/>
-            </Link>
-          </div>
-        )}
+        </div>
+
       </Container>
     </>
   );

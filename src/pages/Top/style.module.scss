@@ -1,0 +1,39 @@
+@import "../../variable";
+
+.root {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .contents {
+    width: 100%;
+    padding: 40px;
+    max-width: 500px;
+    border-radius: 8px;
+    background: $gray5;
+  }
+
+  .heading {
+    padding-bottom: 30px;
+    text-align: center;
+
+    h1 {
+      @include text1;
+    }
+
+    p {
+      margin-top: 10px;
+      @include text7;
+    }
+  }
+
+  .btn_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  
+}

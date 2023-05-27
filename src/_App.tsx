@@ -11,7 +11,7 @@ const App: React.FunctionComponent = () => {
   const {currentUser, isLoading} = AuthProvider();
   
   if (isLoading) {
-    return <p>ロード中</p>;
+    return <></>;
   } else {
     return (
       <>

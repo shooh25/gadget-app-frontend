@@ -64,10 +64,7 @@ const Setting: React.FC = () => {
     const updatedUser = { ...userData };
 
     for (let key in gadgetLabels) {
-      updatedUser.gadget[key] = removeEmptyElements(
-        updatedUser.gadget[key]
-      );
-
+      updatedUser.gadget[key] = removeEmptyElements(updatedUser.gadget[key]);
     }
     if (userData) {
       updateUser(userData);
@@ -130,6 +127,44 @@ const Setting: React.FC = () => {
                 <SettingList
                   label={gadgetLabels["keyboard_items"]}
                   category={"keyboard_items"}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
+
+                {/* モニター */}
+                <SettingList
+                  label={gadgetLabels["monitor_items"]}
+                  category={"monitor_items"}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
+
+                {/* オーディオ */}
+                <SettingList
+                  label={gadgetLabels["audio_items"]}
+                  category={"audio_items"}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
+
+                {/* コントローラー */}
+                <SettingList
+                  label={gadgetLabels["pad_items"]}
+                  category={"pad_items"}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
+              </section>
+
+              <section className={styles.contents}>
+                <div className={styles.heading}>
+                  <h2>その他</h2>
+                </div>
+
+                {/* スマホ */}
+                <SettingList
+                  label={gadgetLabels["phone_items"]}
+                  category={"phone_items"}
                   userData={userData}
                   setUserData={setUserData}
                 />

@@ -56,4 +56,11 @@
       @include text2;
     }
   }
+
+  .nav {
+    width: 100%;
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+  }
 }

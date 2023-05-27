@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 
 import styles from "./style.module.scss";
-import { AuthProvider } from "../../lib/auth";
+import { AuthProvider, logout } from "../../lib/auth";
 import { getUserByName } from "../../lib/api/users";
 import { UserType } from "../../types";
 import { gadgetLabels } from "../../utils/datas";
@@ -22,7 +22,7 @@ const Profile: React.FunctionComponent = () => {
     const handleGetUser = async () => {
       // URL末尾の文字列でユーザーを検索
       const res = await getUserByName(pathName.slice(1));
-      
+
       if (res.data) {
         setUserData(res.data);
       }
@@ -50,7 +50,9 @@ const Profile: React.FunctionComponent = () => {
           <div className={styles.root}>
             <div className={styles.header}></div>
             <div className={styles.icon_wrapper}>
-              {userData?.photo_url ? (<img src={userData.photo_url}></img>):(null)}
+              {userData?.photo_url ? (
+                <img src={userData.photo_url}></img>
+              ) : null}
             </div>
             {userData ? (
               <>
@@ -62,7 +64,11 @@ const Profile: React.FunctionComponent = () => {
                     {isMyPage ? (
                       <div className={styles.edit_button}>
                         <Link to={"/setting"}>
-                          <Button value={"編集"} onClick={() => {}} design="primary"/>
+                          <Button
+                            value={"編集"}
+                            onClick={() => {}}
+                            design="primary"
+                          />
                         </Link>
                       </div>
                     ) : null}
@@ -79,21 +85,67 @@ const Profile: React.FunctionComponent = () => {
 
                 <section className={styles.section}>
                   <h2 className={styles.section_heading}>周辺機器</h2>
-                  <Card data={userData.gadget.mouse_items} heading={gadgetLabels['mouse_items']} />
-                  <Card data={userData.gadget.keyboard_items} heading={gadgetLabels['keyboard_items']} />
-                  <Card data={userData.gadget.monitor_items} heading={gadgetLabels['monitor_items']} />
-                  <Card data={userData.gadget.audio_items} heading={gadgetLabels['audio_items']} />
-                  <Card data={userData.gadget.pad_items} heading={gadgetLabels['pad_items']} />
+                  <Card
+                    data={userData.gadget.mouse_items}
+                    heading={gadgetLabels["mouse_items"]}
+                  />
+                  <Card
+                    data={userData.gadget.keyboard_items}
+                    heading={gadgetLabels["keyboard_items"]}
+                  />
+                  <Card
+                    data={userData.gadget.monitor_items}
+                    heading={gadgetLabels["monitor_items"]}
+                  />
+                  <Card
+                    data={userData.gadget.audio_items}
+                    heading={gadgetLabels["audio_items"]}
+                  />
+                  <Card
+                    data={userData.gadget.pad_items}
+                    heading={gadgetLabels["pad_items"]}
+                  />
                 </section>
 
                 <section className={styles.section}>
-                <h2 className={styles.section_heading}>その他</h2>
+                  <h2 className={styles.section_heading}>その他</h2>
+                  <Card
+                    data={userData.gadget.phone_items}
+                    heading={gadgetLabels["phone_items"]}
+                  />
                 </section>
               </>
             ) : (
-              <div>
-                <h2>このアカウントは存在しません</h2>
-              </div>
+              <>
+                <section className={styles.profile}>
+                  <div className={styles.contents}>
+                    <h1 className={styles.profile_name}>
+                      このアカウントは存在しません
+                    </h1>
+                  </div>
+                </section>
+              </>
+            )}
+
+            {/* ログインページへ遷移 */}
+            {currentUser ? (
+              <section className={styles.nav}>
+                <Button
+                  value={"ログアウト"}
+                  onClick={logout}
+                  design="secondary"
+                />
+              </section>
+            ) : (
+              <section className={styles.nav}>
+                <Link to={"/login"}>
+                  <Button
+                    value={"ログインする"}
+                    onClick={() => {}}
+                    design="primary"
+                  />
+                </Link>
+              </section>
             )}
           </div>
         </Container>
