@@ -4,10 +4,14 @@
   position: relative;
 
   .header {
-    margin-left: -20px;
-    width: calc(100% + 40px);
     height: 110px;
-    background: $gray1;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    background: radial-gradient(
+      circle,
+      rgba(238, 174, 202, 1) 0%,
+      rgba(148, 187, 233, 1) 100%
+    );
   }
 
   .icon_wrapper {
@@ -46,7 +50,6 @@
         @include text4;
       }
     }
-    
   }
 
   .section {
