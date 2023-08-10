@@ -15,7 +15,7 @@ const Top: React.FunctionComponent = () => {
     if (currentUser) {
       const handleGetUser = async () => {
         const res = await getUserByUid(currentUser.uid); // ログイン中のユーザー情報をdbから取得
-        setUserName(res.data.user_name); // ログイン中のユーザー名をセット
+        setUserName(res.data?.user_name); // ログイン中のユーザー名をセット
       };
       handleGetUser();
     }
