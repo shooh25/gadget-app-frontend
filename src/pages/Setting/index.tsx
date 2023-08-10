@@ -43,6 +43,7 @@ const Setting: React.FC = () => {
     state: any,
     func: React.Dispatch<any>
   ) => {
+    
     // 表示用のデータ更新
     const updated = { ...state };
     updated[key].text = e.target.value;
